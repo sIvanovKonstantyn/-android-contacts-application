@@ -1,6 +1,11 @@
 package com.example.contactlistapplication.models;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Contact {
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
     private String phone;

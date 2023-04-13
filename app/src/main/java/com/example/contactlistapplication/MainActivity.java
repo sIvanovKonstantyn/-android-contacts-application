@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.contactlistapplication.adapters.ContactListAdapter;
 import com.example.contactlistapplication.database.ContactDao;
+import com.example.contactlistapplication.database.ContactDatabase;
 import com.example.contactlistapplication.models.Contact;
 
 import java.util.List;
@@ -23,7 +24,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        contactDao = new ContactDao(getApplicationContext());
+        ContactDatabase database = ContactDatabase.getInstance(getApplicationContext());
+        contactDao = database.contactDao();
 
         List<Contact> contacts = contactDao.getAll();
         adapter = new ContactListAdapter(this, contacts);
@@ -54,11 +56,5 @@ public class MainActivity extends AppCompatActivity {
         Contact contactToRemove = contacts.get(0);
         contactDao.delete(contactToRemove);
         adapter.remove(contactToRemove);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        contactDao.close();
     }
 }
